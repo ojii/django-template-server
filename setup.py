@@ -2,7 +2,7 @@ from setuptools import setup
 from templateserver import __version__ as version
 
 with open('README.rst') as fobj:
-    long_description = fobj.read() 
+    long_description = fobj.read()
 
 
 setup(name="django-template-server",
@@ -25,4 +25,5 @@ setup(name="django-template-server",
       packages=['templateserver'],
       entry_points=dict(console_scripts=['maketemplateserver=templateserver.maketemplateserver:main']),
       install_require=['virtualenv>=1.6'],
+      include_package_data=True,
       zip_safe=False)
