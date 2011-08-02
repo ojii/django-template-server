@@ -9,16 +9,18 @@ from django.http import HttpResponse
 import os
 import socket
 
-TEMPLATE_DIR = '$TEMPLATEDIR$'
-MEDIA_DIR = '$MEDIADIR$'
-STATIC_DIR = '$STATICDIR$'
+THISDIR = os.path.abspath(os.path.dirname(__file__))
+
+TEMPLATE_DIR = os.path.join(THISDIR, '$TEMPLATEDIR$')
+MEDIA_DIR = os.path.join(THISDIR, '$MEDIADIR$')
+STATIC_DIR = os.path.join(THISDIR, '$STATICDIR$')
 
 #==============================================================================
 # Views 
 #==============================================================================
 
 def index(request):
-    context = template.RequestContext({
+    context = template.RequestContext(request, {
         'templates': get_templates(),
     })
     tpl = template.Template("""<html>

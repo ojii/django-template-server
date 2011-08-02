@@ -5,11 +5,11 @@ import virtualenv
 from templateserver import __version__ as version
 
 
-DEFAULT_TEMPLATE_DIR = os.path.abspath(os.path.join(os.getcwd(), 'templates', ''))
-DEFAULT_MEDIA_DIR = os.path.abspath(os.path.join(os.getcwd(), 'media', ''))
-DEFAULT_STATIC_DIR = os.path.abspath(os.path.join(os.getcwd(), 'static', ''))
-DEFAULT_ENV_DIR = os.path.abspath(os.path.join(os.getcwd(), '.env', ''))
-DEFAULT_RUNSERVER_PATH = os.path.abspath(os.path.join(os.getcwd(), 'runserver.py'))
+DEFAULT_TEMPLATE_DIR = 'templates'
+DEFAULT_MEDIA_DIR = 'media'
+DEFAULT_STATIC_DIR = 'static'
+DEFAULT_ENV_DIR = '.env'
+DEFAULT_RUNSERVER_PATH = 'runserver.py'
 
 RUNSERVER_TEMPLATE = os.path.abspath(os.path.join(os.path.dirname(__file__), 'runserver_template.py'))
 
