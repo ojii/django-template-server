@@ -7,6 +7,7 @@ from templateserver import __version__ as version
 
 DEFAULT_TEMPLATE_DIR = os.path.abspath(os.path.join(os.getcwd(), 'templates', ''))
 DEFAULT_MEDIA_DIR = os.path.abspath(os.path.join(os.getcwd(), 'media', ''))
+DEFAULT_STATIC_DIR = os.path.abspath(os.path.join(os.getcwd(), 'static', ''))
 DEFAULT_ENV_DIR = os.path.abspath(os.path.join(os.getcwd(), '.env', ''))
 DEFAULT_RUNSERVER_PATH = os.path.abspath(os.path.join(os.getcwd(), 'runserver.py'))
 
@@ -21,7 +22,7 @@ def install_django(envdir, version):
     pip = os.path.join(envdir, 'bin', 'pip')
     subprocess.call([pip, 'install', 'django==%s' % version])
     
-def install_runserver(envdir, runserverpath, templatedir, mediadir):
+def install_runserver(envdir, runserverpath, templatedir, mediadir, staticdir):
     python = os.path.join(envdir, 'bin', 'python')
     with open(RUNSERVER_TEMPLATE) as fobj:
         template = fobj.read()
@@ -30,6 +31,8 @@ def install_runserver(envdir, runserverpath, templatedir, mediadir):
             '$PYTHON$', python
         ).replace(
             '$MEDIADIR$', mediadir
+        ).replace(
+            '$STATICDIR$', staticdir
         ).replace(
             '$TEMPLATEDIR$', templatedir
         ).replace(
@@ -40,13 +43,14 @@ def install_runserver(envdir, runserverpath, templatedir, mediadir):
     os.chmod(runserverpath, 0755)
 
 def install(templatedir=DEFAULT_TEMPLATE_DIR, mediadir=DEFAULT_MEDIA_DIR,
-            runserverpath=DEFAULT_RUNSERVER_PATH, envdir=DEFAULT_ENV_DIR, django='1.3'):
+            staticdir=DEFAULT_STATIC_DIR, runserverpath=DEFAULT_RUNSERVER_PATH,
+            envdir=DEFAULT_ENV_DIR, django='1.3'):
     """
     Install the runserver.py script
     """
     install_virtualenv(envdir)
     install_django(envdir, django)
-    install_runserver(envdir, runserverpath, templatedir, mediadir)
+    install_runserver(envdir, runserverpath, templatedir, mediadir, staticdir)
 
 
 def main():
@@ -63,11 +67,14 @@ def main():
                         default=DEFAULT_TEMPLATE_DIR)
     parser.add_argument('-m', '--mediadir', help='Folder with your media files (css/js).',
                         default=DEFAULT_MEDIA_DIR)
+    parser.add_argument('-s', '--staticdir', help='Folder with your static files (css/js).',
+                        default=DEFAULT_STATIC_DIR)
     parser.add_argument('-r', '--runserverpath', help='Location for your runserver.py executable.',
                         default=DEFAULT_RUNSERVER_PATH)
     args = parser.parse_args()
     install(django=args.django, templatedir=args.templatedir,
-            mediadir=args.mediadir, runserverpath=args.runserverpath)
+            mediadir=args.mediadir, staticdir=args.staticdir,
+            runserverpath=args.runserverpath)
     print 'done'
 
 if __name__ == '__main__':

@@ -1,7 +1,10 @@
+import os
 from setuptools import setup
 from templateserver import __version__ as version
 
-with open('README.rst') as fobj:
+README = os.path.join(os.path.dirname(__file__), 'README.rst')
+
+with open(README) as fobj:
     long_description = fobj.read()
 
 

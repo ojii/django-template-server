@@ -11,13 +11,14 @@ import socket
 
 TEMPLATE_DIR = '$TEMPLATEDIR$'
 MEDIA_DIR = '$MEDIADIR$'
+STATIC_DIR = '$STATICDIR$'
 
 #==============================================================================
 # Views 
 #==============================================================================
 
 def index(request):
-    context = template.Context({
+    context = template.RequestContext({
         'templates': get_templates(),
     })
     tpl = template.Template("""<html>
@@ -40,7 +41,8 @@ def index(request):
 urlpatterns = patterns('',
     url('^$', index),
     url('^show/(?P<template>.+)', 'django.views.generic.simple.direct_to_template', name='show'),
-    url('^media/(?P<path>.+)', 'django.views.static.serve', {'document_root': MEDIA_DIR})
+    url('^media/(?P<path>.+)', 'django.views.static.serve', {'document_root': MEDIA_DIR}),
+    url('^static/(?P<path>.+)', 'django.views.static.serve', {'document_root': MEDIA_DIR}),
 )
 
 #==============================================================================
@@ -79,6 +81,10 @@ def run(public=True, port=None):
         TEMPLATE_DEBUG=True,
         TEMPLATE_DIRS=[TEMPLATE_DIR],
         APPEND_SLASH=False,
+        STATIC_ROOT=STATIC_DIR,
+        MEDIA_ROOT=MEDIA_DIR,
+        STATIC_URL='/static/',
+        MEDIA_URL='/media/',
     )
     port = port or get_open_port() 
     if public:
