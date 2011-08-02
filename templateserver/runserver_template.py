@@ -44,7 +44,7 @@ urlpatterns = patterns('',
     url('^$', index),
     url('^show/(?P<template>.+)', 'django.views.generic.simple.direct_to_template', name='show'),
     url('^media/(?P<path>.+)', 'django.views.static.serve', {'document_root': MEDIA_DIR}),
-    url('^static/(?P<path>.+)', 'django.views.static.serve', {'document_root': MEDIA_DIR}),
+    url('^static/(?P<path>.+)', 'django.views.static.serve', {'document_root': STATIC_DIR}),
 )
 
 #==============================================================================
